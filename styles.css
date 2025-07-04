@@ -1,19 +1,21 @@
-/* Reset & base */
+/* Reset & Base Styles */
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Arial', sans-serif;
   background: #fff;
   margin: 0;
   padding: 20px;
-  color: #8B0000; /* Dark Red */
+  color: #8B0000;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 }
 
+/* Header Styles */
 header {
   text-align: center;
   margin-bottom: 1rem;
@@ -28,9 +30,10 @@ header {
 h1 {
   font-weight: 700;
   font-size: 2rem;
-  color: #B22222; /* Firebrick red */
+  color: #B22222;
 }
 
+/* Upload Section */
 .upload-section {
   margin-bottom: 1.5rem;
   text-align: center;
@@ -56,6 +59,40 @@ h1 {
   border-color: #8B0000;
 }
 
+/* How-To Section */
+.how-to-section {
+  background-color: #f9f9f9;
+  padding: 1em;
+  margin: 2em 0;
+  border-left: 5px solid #B22222;
+  border-radius: 8px;
+  max-width: 900px;
+}
+
+.how-to-section h2 {
+  margin-top: 0;
+  color: #B22222;
+}
+
+.how-to-section ol {
+  padding-left: 1.5em;
+}
+
+.how-to-section li {
+  margin-bottom: 0.5em;
+}
+
+/* Logo Image */
+img[alt="HI Canada logo"] {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1rem;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+/* Tags Container */
 .tags-container {
   display: flex;
   flex-wrap: wrap;
@@ -65,15 +102,14 @@ h1 {
   max-width: 900px;
 }
 
-/* Guest tag styling */
+
+/* Guest Tag Styling */
 .guest-tag {
   font-family: Arial, sans-serif;
   font-size: 15px;
-  width: 10.5cm;
-  height: 14.8cm; /* A6 size */
-  padding-top: 1in;
-  padding-left: 0.25in;
-  padding-right: 0.25in;
+  width: 105mm;
+  height: 148mm;
+  padding: 20mm 10mm 0 10mm; /* about 1 inch top, 1cm sides */
   background: #fff0f0;
   border: 1px dashed #B22222;
   border-radius: 10px;
@@ -81,17 +117,20 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  page-break-after: always;
   color: #8B0000;
   user-select: none;
-  transition: box-shadow 0.3s ease;
+  page-break-inside: avoid;
+  page-break-after: always;
+  overflow: hidden;
+  margin: 0;
 }
+
 
 .guest-tag:hover {
   box-shadow: 0 5px 15px rgba(178, 34, 34, 0.4);
 }
 
-/* The line container inside guest tag */
+/* Content Inside Each Tag */
 .guest-tag > div {
   display: flex;
   justify-content: space-between;
@@ -100,58 +139,59 @@ h1 {
 }
 
 .guest-tag > div > div {
-  text-align: right;
   font-weight: 600;
 }
 
 .guest-tag > div > div:nth-child(1) {
-  width: 3cm;  /* room */
+  width: 3cm;
   text-align: left;
-  color: #000000;
+  color: #000;
 }
 
 .guest-tag > div > div:nth-child(2) {
-  width: 6cm;  /* name */
+  width: 6cm;
   text-align: left;
-  color: #000000;
+  color: #000;
 }
 
 .guest-tag > div > div:nth-child(3) {
-  width: 3.5cm; /* checkout date */
+  width: 3.5cm;
   text-align: right;
-  color: #000000;
+  color: #000;
 }
 
-/* Print styles */
+/* PRINT STYLES */
 @media print {
+  @page {
+    size: A6;
+    margin: 0;
+  }
+
   body {
     margin: 0;
+    padding: 0;
     background: white;
     color: black;
   }
 
-  header, .upload-section {
-    display: none;
-  }
-
-  .guest-tag {
-    border: none;
-    box-shadow: none;
-    page-break-after: always;
-    user-select: text;
-    background: white;
+  header,
+  .upload-section,
+  .how-to-section {
+    display: none !important;
   }
 
   .tags-container {
-    justify-content: flex-start;
-    gap: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .guest-tag {
+    box-shadow: none;
+    border: none;
+    background: white;
+    page-break-after: always;
+    break-after: page;
   }
 }
-img[alt="HI Canada logo"] {
-  display: block;
-  max-width: 100%;     /* scale down to container width */
-  height: auto;        /* keep aspect ratio */
-  margin: 0 auto 1rem; /* center horizontally + margin below */
-  max-height: 150px;   /* optional max height to keep it reasonable */
-  object-fit: contain; /* ensure image scales nicely */
-}
+

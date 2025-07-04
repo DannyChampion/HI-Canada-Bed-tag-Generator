@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <header>
+  <img src="HI-Canada_Logo.png" alt="HI Canada logo" />
+</header>
+  <title>Guest Bed Tag Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Load PapaParse CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Guest Bed Tags Generator</h1>
+  </header>
+
+  <main>
+    <section class="upload-section">
+      <label for="csvFile" class="upload-label">Upload Guest CSV File</label>
+      <input type="file" id="csvFile" accept=".csv" />
+    </section>
+
+    <section id="output" class="tags-container"></section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

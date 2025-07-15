@@ -252,6 +252,9 @@ img[alt="HI Canada logo"] {
 .print-button {
     display: none !important;
   }
+.guest-count{
+  display: none !important;
+  }
 }
 
 

@@ -3,39 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guest Bed Tag Generator</title>
+  <title>HI Canada Tools</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Load PapaParse CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-  <header>
-    <img src="HI-Canada_Logo.png" alt="HI Canada logo" />
-    <h1>Guest Bed Tags Generator</h1>
+  <header class="landing-header">
+    <img src="HI-Canada_Logo.png" alt="HI Canada logo" class="logo" />
+    <h1>HI Canada Tools</h1>
   </header>
 
-  <main>
-    <section class="upload-section">
-      <label for="csvFile" class="upload-label">Upload Guest CSV File</label>
-      <input type="file" id="csvFile" accept=".csv" />
-    </section>
-
-    <!-- How To Section -->
-    <section class="how-to-section">
-      <h2>How to Use</h2>
-      <ol>
-        <li>Go to <strong>GuestCentrix Reports</strong> and select the <em>Arrival List by Date Range</em> report.</li>
-        <li>Set the date to today and sort by <strong>Bed No.</strong>.</li>
-        <li>Export the report as a <code>.csv</code> file.</li>
-        <li>Click “Upload Guest CSV File” above and select the exported file.</li>
-        <li>Review the generated bed tags below.</li>
-        <li>Press ctrl+p to print and set paper size to A6 </li>
-      </ol>
-    </section>
-
-    <section id="output" class="tags-container"></section>
+  <main class="tool-menu">
+    <a href="bedTagGenerator.html" class="tool-button">Guest Bed Tag Generator</a>
+    <a href="otaTool.html" class="tool-button">OTA Tool</a>
+    <!-- Add more tools here -->
   </main>
-
-  <script src="script.js"></script>
 </body>
 </html>

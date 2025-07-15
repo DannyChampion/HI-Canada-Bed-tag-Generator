@@ -1,0 +1,257 @@
+/**
+ * HI Hostels Canada - Guest Bed Tag Stylesheet
+ * --------------------------------------------
+ * This stylesheet defines the layout, fonts, colors, and print behavior
+ * for generating A6-sized guest bed tags styled in HI Hostels Canada's
+ * red-and-white visual theme.
+ *
+ * Written by: Danny James Champion
+ * Date: 06/30/2025
+ */
+
+/* Global reset and layout setup */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 20px;
+  color: #8B0000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  height: 60px;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 1px 1px rgba(139, 0, 0, 0.3));
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #B22222;
+}
+
+/* Upload Section */
+.upload-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.upload-label {
+  display: block;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #B22222;
+}
+
+#csvFile {
+  padding: 8px;
+  border: 2px solid #B22222;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+#csvFile:hover {
+  border-color: #8B0000;
+}
+
+/* How-To Section */
+.how-to-section {
+  background-color: #f9f9f9;
+  padding: 1em;
+  margin: 2em 0;
+  border-left: 5px solid #B22222;
+  border-radius: 8px;
+  max-width: 900px;
+}
+
+.how-to-section h2 {
+  margin-top: 0;
+  color: #B22222;
+}
+
+.how-to-section ol {
+  padding-left: 1.5em;
+}
+
+.how-to-section li {
+  margin-bottom: 0.5em;
+}
+
+/* Logo Image */
+img[alt="HI Canada logo"] {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1rem;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+/* Tags Container */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 900px;
+}
+
+
+/* Guest Tag Styling */
+.guest-tag {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  width: 105mm;
+  height: 148mm;
+  padding: 20mm 10mm 0 10mm; /* about 1 inch top, 1cm sides */
+  background: #fff0f0;
+  border: 1px dashed #B22222;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(178, 34, 34, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #8B0000;
+  user-select: none;
+  page-break-inside: avoid;
+  page-break-after: always;
+  overflow: hidden;
+  margin: 0;
+}
+
+
+.guest-tag:hover {
+  box-shadow: 0 5px 15px rgba(178, 34, 34, 0.4);
+}
+
+/* Content Inside Each Tag */
+.guest-tag > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.guest-tag > div > div {
+  font-weight: 600;
+}
+
+.guest-tag > div > div:nth-child(1) {
+  width: 3cm;
+  text-align: left;
+  color: #000;
+}
+
+.guest-tag > div > div:nth-child(2) {
+  width: 6cm;
+  text-align: left;
+  color: #000;
+}
+
+.guest-tag > div > div:nth-child(3) {
+  width: 3.5cm;
+  text-align: right;
+  color: #000;
+}
+
+/* Back Button */
+.back-button {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 0.6em 1.2em;
+  background-color: #B22222;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.back-button:hover {
+  background-color: #8B0000;
+  transform: translateY(-1px);
+}
+.print-section {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.print-button {
+  background-color: #B22222;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(178, 34, 34, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.print-button:hover {
+  background-color: #8B0000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
+}
+/* PRINT STYLES */
+@media print {
+  @page {
+    size: A6;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: black;
+  }
+
+  header,
+  .upload-section,
+  .how-to-section {
+    display: none !important;
+  }
+
+  .tags-container {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .guest-tag {
+    box-shadow: none;
+    border: none;
+    background: white;
+    page-break-after: always;
+    break-after: page;
+  }
+.back-button {
+    display: none !important;
+  }
+.print-button {
+    display: none !important;
+  }
+}
+
+

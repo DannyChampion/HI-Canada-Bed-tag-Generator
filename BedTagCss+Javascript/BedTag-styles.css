@@ -120,7 +120,7 @@ img[alt="HI Canada logo"] {
   font-size: 15px;
   width: 105mm;
   height: 148mm;
-  padding: 25mm 10mm 0 10mm; /* top, right, bottom, left */
+  padding: 20mm 10mm 0 10mm; /* top, right, bottom, left */
   background: #fff0f0;
   border: 1px dashed #B22222;
   border-radius: 10px;

@@ -74,43 +74,47 @@ document.getElementById('csvFile').addEventListener('change', function (e) {
 
       console.log("Total guests parsed:", rawGuests.length);
 
-      // Step 1: Group by voucher
-      const voucherMap = {};
-      rawGuests.forEach(guest => {
-        const key = guest.voucher || `__NOVOUCHER__-${guest.room}-${guest.checkout}`;
-        if (!voucherMap[key]) voucherMap[key] = [];
-        voucherMap[key].push(guest);
-      });
+// Step 1: Group guests by voucher (fallback: use room+checkout as key if no voucher)
+const voucherMap = {};
+rawGuests.forEach(guest => {
+  const key = guest.voucher || `__NOVOUCHER__-${guest.room}-${guest.checkout}`;
+  if (!voucherMap[key]) voucherMap[key] = [];
+  voucherMap[key].push(guest);
+});
 
-      // Step 2: Conditionally reduce group to one tag if bed count matches
-      const finalGuests = [];
+// Step 2: Consolidate group bookings if bed count matches
+const finalGuests = [];
 
-      Object.entries(voucherMap).forEach(([voucher, group]) => {
-        const firstGuest = group[0];
-        const match = firstGuest.roomType.match(/^(\d+)-Bed/i);
-        const bedCount = match ? parseInt(match[1], 10) : null;
+Object.entries(voucherMap).forEach(([voucher, group]) => {
+  const firstGuest = group[0];
 
-        if (
-          bedCount &&
-          group.length === bedCount &&
-          !voucher.startsWith("__NOVOUCHER__") &&
-          voucher.trim() !== ""
-        ) {
-          // Valid group booking: only one tag
-          console.log(`Group booking detected: Voucher ${voucher}, Bed Count: ${bedCount}`);
-          finalGuests.push({
-            ...firstGuest,
-            name: firstGuest.name + " + "
-          });
-        } else {
-          // Either not a group or voucher missing/invalid
-          console.log(`Individual guests for voucher: ${voucher} (count: ${group.length})`);
-          finalGuests.push(...group);
-        }
-      });
+  // Try to extract bed count from room type (e.g., "6-Bed Dorm")
+  const match = firstGuest.roomType.match(/^(\d+)-Bed/i);
+  const bedCount = match ? parseInt(match[1], 10) : null;
 
-      console.log("Final tags to render:", finalGuests.length);
-      renderGuests(finalGuests);
+  if (
+    bedCount &&
+    group.length === bedCount &&
+    !voucher.startsWith("__NOVOUCHER__") &&
+    voucher.trim() !== ""
+  ) {
+    // Valid group booking: merge into one tag
+    console.log(`Group booking detected: Voucher ${voucher}, Bed Count: ${bedCount}`);
+    finalGuests.push({
+      ...firstGuest,
+      name: `${firstGuest.name}<sup style="font-size: 0.6em;">${bedCount}</sup>` // Bed count in smaller text
+    });
+  } else {
+    // Not a valid group: include each guest individually
+    console.log(`Individual guests for voucher: ${voucher} (count: ${group.length})`);
+    finalGuests.push(...group);
+  }
+});
+
+console.log("Final tags to render:", finalGuests.length);
+renderGuests(finalGuests);
+
+
     },
 
     error: function (err) {
@@ -132,8 +136,8 @@ function renderGuests(guests) {
   guestCountDisplay.textContent = `Total Tags: ${guests.length}`;
   guestCountDisplay.classList.remove('hidden');
 
-
   guests.forEach(guest => {
+    // Skip invalid rows
     if (
       !guest.room.trim() || !guest.checkout.trim() ||
       guest.room.trim() === '.' || guest.checkout.trim() === '.'
@@ -143,27 +147,31 @@ function renderGuests(guests) {
     tag.className = 'guest-tag';
 
     const line = document.createElement('div');
-
     const roomDiv = document.createElement('div');
 
-    // Format: "101-1" becomes "101¹"
-    const roomParts = guest.room.split('-');
-    if (roomParts.length === 2) {
-      const [main, sub] = roomParts;
-
-      roomDiv.innerHTML = `${main}<sup style="font-size: 0.6em;">${sub}</sup>`;
-    } else {
-      roomDiv.textContent = guest.room; // fallback
+    // Handle Cabin label mapping before any rendering
+    let roomValue = guest.room.trim();
+    if (roomValue === '601') {
+      roomValue = 'Cabin 1 '; // Change 601 → Cabin 1
+    } else if (roomValue === '602') {
+      roomValue = 'Cabin 2 '; // Change 602 → Cabin 2
     }
 
+    // Format: "101-1" becomes "101¹"
+    const roomParts = roomValue.split('-');
+    if (roomParts.length === 2) {
+      const [main, sub] = roomParts;
+      roomDiv.innerHTML = `${main}<sup style="font-size: 0.6em;">${sub}</sup>`;
+    } else {
+      roomDiv.textContent = roomValue; // Fallback or mapped Cabin label
+    }
 
     const nameDiv = document.createElement('div');
-
-if (guest.guests > 1 && guest.name) {
-  nameDiv.innerHTML = `${guest.name}<sup style="font-size: 0.6em;">${guest.guests}</sup>`;
-} else {
-  nameDiv.textContent = guest.name || '';
-}
+    if (guest.guests > 1 && guest.name) {
+      nameDiv.innerHTML = `${guest.name}<sup style="font-size: 0.6em;">${guest.guests}</sup>`;
+    } else {
+      nameDiv.innerHTML = guest.name || '';
+    }
 
     const dateDiv = document.createElement('div');
     dateDiv.textContent = guest.checkout;
